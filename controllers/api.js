@@ -1,18 +1,25 @@
 const express =require("express");
 const path = require("path");
 const router = express.Router();
+const Note = require('./../db/db');
 
 router.get('/api/notes',(req,res)=>{
     res.sendFile(path.join(__dirname,"../db/db.json"));
 })
 
-router.post('/api/notes',(req,res)=>{
-    const newNote = req.body
-    res.json(newNote)
+router.post('/api/notes', async (req,res)=>{
+    try {
+    const newReq = req.body
+    const newNote = new Note(newReq.title, newReq.text)
+    const result = await newNote.addNote()
+    res.send(result)
+    } catch (err) {
+        console.log(err)
+    }
 })
 
-router.post('/api/notes/:id',(req,res)=>{
-    const newNote = req.body
+router.get('/api/notes/:id',(req,res)=>{
+
     res.json(newNote)
 })
 
