@@ -43,5 +43,7 @@ async function deleteNote(id){
     }
 }
 
-module.exports = Note;
-// module.exports = deleteNote;
+module.exports = {
+    Note: Note,
+    deleteNote: deleteNote
+}

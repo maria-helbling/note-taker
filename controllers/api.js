@@ -1,12 +1,14 @@
 const express =require("express");
 const path = require("path");
 const router = express.Router();
-const Note = require('./../db/db');
+const {Note, deleteNote} = require('./../db/db');
 
+//route for displaying notes from db
 router.get('/api/notes',(req,res)=>{
     res.sendFile(path.join(__dirname,"../db/db.json"));
 })
 
+// adds new notes to db
 router.post('/api/notes', async (req,res)=>{
     try {
     const newReq = req.body
@@ -18,6 +20,7 @@ router.post('/api/notes', async (req,res)=>{
     }
 })
 
+// deletes notes
 router.get('/api/notes/:id',(req,res)=>{
 
     res.json(newNote)
