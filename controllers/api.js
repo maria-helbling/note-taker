@@ -13,8 +13,8 @@ router.post('/api/notes', async (req,res)=>{
     try {
     const newReq = req.body
     const newNote = new Note(newReq.title, newReq.text)
-    const result = await newNote.addNote()
-    res.send(result)
+    await newNote.addNote()
+    res.send(newNote)
     } catch (err) {
         console.log(err)
     }
