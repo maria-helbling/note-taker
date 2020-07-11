@@ -21,9 +21,17 @@ router.post('/api/notes', async (req,res)=>{
 })
 
 // deletes notes
-router.get('/api/notes/:id',(req,res)=>{
-
-    res.json(newNote)
+router.delete('/api/notes/:id', async (req,res)=>{
+    try
+    {
+    const id = req.params.id
+    await deleteNote(id)
+    res.send('deleted')
+    }catch(err){
+        console.log(err)
+    }
+    
 })
 
+//export my routes
 module.exports = router;

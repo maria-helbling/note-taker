@@ -21,10 +21,14 @@ class Note {
         try {
             let allNotes = [];
             allNotes = await readFileAsync(path.join(__dirname,"../db/db.json"), 'utf8');
-            allNotes = JSON.parse(allNotes)
-            allNotes.push(this)
-            await writeFileAsync(path.join(__dirname,"../db/db.json"),JSON.stringify(allNotes))
-            return "note added"
+            if (!allNotes){
+                allNotes = [];
+            } else {
+                allNotes = JSON.parse(allNotes);
+            }
+            allNotes.push(this);
+            await writeFileAsync(path.join(__dirname,"../db/db.json"),JSON.stringify(allNotes));
+            return "note added" ;
         } catch (err) {
             console.log(err);
       }
@@ -37,12 +41,15 @@ async function deleteNote(id){
     try {
     let allNotes = await readFileAsync(path.join(__dirname,"../db/db.json"), 'utf8');
     allNotes = JSON.parse(allNotes)
-    allNotes.filter(element => element.id !== id)
+    allNotes = allNotes.filter(element => element.id != parseInt(id))
+    await writeFileAsync(path.join(__dirname,"../db/db.json"),JSON.stringify(allNotes));
+    return 'deleted'
     } catch (err) {
         console.log(err)
     }
 }
 
+//export the class and the delete function
 module.exports = {
     Note: Note,
     deleteNote: deleteNote
